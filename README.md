@@ -56,7 +56,4 @@ pytest
 - Edit books
 - Dark mode
 
-## Notes
 
-I built this project while learning, with help from an AI assistant (Claude).
-The design is inspired by a bookstore concept by Anastasia Bazyk on Dribbble.
