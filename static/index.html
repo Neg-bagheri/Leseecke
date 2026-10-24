@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leseecke</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside>
+    <div class="logo"><span class="logo-icon">✦</span> Leseecke</div>
+
+    <div>
+      <p class="nav-title">Bibliothek</p>
+      <nav class="nav" id="statusNav">
+        <button onclick="filterStatus(this, '')" class="active">Alle Bücher <span class="num" id="nTotal"></span></button>
+        <button onclick="filterStatus(this, 'available')">Verfügbar <span class="num" id="nAvailable"></span></button>
+        <button onclick="filterStatus(this, 'borrowed')">Ausgeliehen <span class="num" id="nBorrowed"></span></button>
+        <button onclick="filterStatus(this, 'overdue')">Überfällig <span class="num num-red" id="nOverdue"></span></button>
+      </nav>
+    </div>
+
+    <div>
+      <p class="nav-title">Kategorien</p>
+      <nav class="nav" id="categoryNav"></nav>
+    </div>
+
+    <button class="btn btn-dark btn-full add-btn" onclick="openAddDialog()">+ Buch hinzufügen</button>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search" type="text" placeholder="Was möchtest du lesen?">
+      </label>
+      <span class="stats" id="stats"></span>
+    </div>
+
+    <section class="hero" id="hero"></section>
+
+    <section>
+      <div class="section-head">
+        <h2 id="shelfTitle">Alle Bücher</h2>
+        <select id="sort">
+          <option value="title">Titel (A–Z)</option>
+          <option value="author">Autor (A–Z)</option>
+          <option value="year_desc">Neueste zuerst</option>
+          <option value="year">Älteste zuerst</option>
+        </select>
+      </div>
+      <div class="shelf" id="shelf"></div>
+    </section>
+  </main>
+</div>
+
+<dialog id="addDialog">
+  <form id="addForm">
+    <h2>Neues Buch</h2>
+
+    <div class="field">
+      <label for="fTitle">Titel</label>
+      <input id="fTitle" required>
+    </div>
+
+    <div class="field">
+      <label for="fAuthor">Autor</label>
+      <input id="fAuthor" required>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="fYear">Jahr</label>
+        <input id="fYear" type="number" required>
+      </div>
+      <div class="field">
+        <label for="fCategory">Kategorie</label>
+        <input id="fCategory" list="categoryList" required>
+        <datalist id="categoryList"></datalist>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="fDescription">Beschreibung (optional)</label>
+      <textarea id="fDescription" rows="3"></textarea>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn" onclick="closeDialogs()">Abbrechen</button>
+      <button type="submit" class="btn btn-dark">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="borrowDialog">
+  <form id="borrowForm">
+    <h2>Buch ausleihen</h2>
+    <p class="dialog-sub" id="borrowBookTitle"></p>
+
+    <div class="field">
+      <label for="fBorrower">Name</label>
+      <input id="fBorrower" required placeholder="z. B. Lena Schmidt">
+    </div>
+
+    <div class="field">
+      <label for="fDays">Leihdauer</label>
+      <select id="fDays">
+        <option value="7">1 Woche</option>
+        <option value="14" selected>2 Wochen</option>
+        <option value="21">3 Wochen</option>
+        <option value="28">4 Wochen</option>
+      </select>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn" onclick="closeDialogs()">Abbrechen</button>
+      <button type="submit" class="btn btn-dark">Ausleihen</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
